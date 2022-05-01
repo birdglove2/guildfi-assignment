@@ -4,17 +4,21 @@ import { natsWrapper } from '../../nats-wrapper';
 
 const dummyUserAttrs = global.dummyUserAttrs;
 
-it('should create user and emit an event successfully', async () => {});
+it('should create user and emit an event successfully', async () => {
+  await request(app).post('/api/user').send(dummyUserAttrs).expect(201);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
+
+  const eventData = JSON.parse((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
+  expect(eventData.address).toBe(dummyUserAttrs.address);
+  expect(eventData.name).toBe(dummyUserAttrs.name);
+  expect(eventData.version).toBe(0);
+});
 
 it('should not create user if the user already exists', async () => {
-  const res = await request(app).post('/api/user').send(dummyUserAttrs);
+  await request(app).post('/api/user').send(dummyUserAttrs).expect(201);
 
-  expect(res.status).toBe(201);
-
-  const res2 = await request(app).post('/api/user').send(dummyUserAttrs);
-  expect(res2.status).toBe(400);
-
-  // console.log(res2.body);
-  //TODO: standardize success and fail response
-  // expect(res2.body.errors[0].message).toBe('User already exists!');
+  const res = await request(app).post('/api/user').send(dummyUserAttrs).expect(400);
+  expect(res.body.result.length).toBe(1);
+  expect(res.body.result[0].message).toBe('User already exists!');
 });
