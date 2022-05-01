@@ -1,13 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
+import { InternalServerError } from '../errors/internal-server-error';
 import { CustomError } from '../errors/custom-error';
+import { failResponse } from '../utils';
 
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof CustomError) {
-    return res.status(err.statusCode).send({ errors: err.serializeErrors() });
+    return failResponse(res, err);
   }
 
-  console.error(err);
-  res.status(400).send({
-    errors: [{ message: 'Something went wrong' }],
-  });
+  //TODO: logs error
+  const internalErr = new InternalServerError(err.message);
+  failResponse(res, internalErr);
 };
