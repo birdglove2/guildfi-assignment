@@ -1,5 +1,5 @@
-// import { Publisher, UserCreatedEvent, Subjects } from '@cygnetops/common';
+import { Publisher, UserCreatedEvent, Subjects } from '../../common';
 
-// export class UserCreatedPublisher extends Publisher<UserCreatedEvent> {
-//   subject: Subjects.UserCreated = Subjects.UserCreated;
-// }
+export class UserCreatedPublisher extends Publisher<UserCreatedEvent> {
+  subject: Subjects.UserCreated = Subjects.UserCreated;
+}
