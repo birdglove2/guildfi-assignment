@@ -23,14 +23,9 @@ spec:
             - name: NATS_URL
               value: 'http://nats-srv:4222'
             - name: NATS_CLUSTER_ID
-              value: ticketing
+              value: guildfi-assignment
             - name: MONGO_URI
               value: 'mongodb://user-mongo-srv:27017/user'
-            - name: JWT_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: jwt-secret
-                  key: JWT_KEY
 ---
 apiVersion: v1
 kind: Service
