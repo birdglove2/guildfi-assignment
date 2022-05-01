@@ -29,7 +29,9 @@ beforeEach(async () => {
 
 afterAll(async () => {
   await mongo.stop();
-  await mongoose.connection.close();
+  setTimeout(function () {
+    mongoose.disconnect();
+  }, 1000);
 });
 
 global.dummyUserAttrs = {
