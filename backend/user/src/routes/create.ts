@@ -5,6 +5,7 @@ import { body } from 'express-validator';
 import { User } from '../models/user';
 import { natsWrapper } from '../nats-wrapper';
 import { UserCreatedPublisher } from '../events/publishers/user-created-publisher';
+import { failResponse, successResponse } from '../common/utils';
 
 const router = express.Router();
 
@@ -25,7 +26,7 @@ router.post(
 
     const user = await User.find({ address: address });
     if (user.length > 0) {
-      throw new BadRequestError('User already exists!');
+      failResponse(res, new BadRequestError('User already exists!'));
     }
 
     const newUser = User.build({
@@ -40,7 +41,7 @@ router.post(
       version: newUser.version,
     });
 
-    res.status(201).send({ success: true, result: newUser });
+    successResponse(res, 201, newUser);
   }
 );
 
