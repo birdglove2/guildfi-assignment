@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 // UserAttrs are properties requried to create a new User
-interface UserAttrs {
+export interface UserAttrs {
   address: string;
   name: string;
 }
