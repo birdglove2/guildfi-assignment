@@ -32,4 +32,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.dummyUserAttrs = { address: 'test-address', name: 'test-name' };
+global.dummyUserAttrs = {
+  address: '0x5f958971072bf53C4C577b44d7a8a04ADce904Ba',
+  name: 'bird',
+};
