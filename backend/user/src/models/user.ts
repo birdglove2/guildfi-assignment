@@ -1,24 +1,29 @@
 import mongoose from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
+// UserAttrs are properties requried to create a new User
 interface UserAttrs {
-  id: string;
   address: string;
   name: string;
 }
 
-export interface UserDoc extends mongoose.Document {
-  address: string;
-  name: number;
-  version: number;
-  isReserved(): Promise<boolean>;
-}
-
+// It is used as an intance of User
 interface UserModel extends mongoose.Model<UserDoc> {
   build(attrs: UserAttrs): UserDoc;
   findByEvent(event: { id: string; version: number }): Promise<UserDoc | null>;
 }
 
+// UserDoc describes what are the attrs
+// inside User after querying from the database
+interface UserDoc extends mongoose.Document {
+  address: string;
+  name: number;
+  version: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// schema for mongoDB
 const userSchema = new mongoose.Schema(
   {
     address: {
@@ -52,24 +57,13 @@ userSchema.statics.findByEvent = (event: { id: string; version: number }) => {
 };
 
 userSchema.statics.build = (attrs: UserAttrs) => {
-  return new User({
-    _id: attrs.id,
-    title: attrs.title,
-    price: attrs.price,
-  });
+  return new User(attrs);
 };
-// userSchema.methods.isReserved = async function () {
-//   // this === the User document that we just called 'isReserved' on
-//   const existingOrder = await Order.findOne({
-//     User: this as any,
-//     status: {
-//       $in: [OrderStatus.Created, OrderStatus.AwaitingPayment, OrderStatus.Complete],
-//     },
-//   });
 
-//   return !!existingOrder;
-// };
-
+// export User that
+// has UserModel properties
+// and UserDoc attributes
+// to use as an instance
 const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
 
 export { User };
