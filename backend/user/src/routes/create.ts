@@ -26,7 +26,7 @@ router.post(
 
     const user = await User.find({ address: address });
     if (user.length > 0) {
-      failResponse(res, new BadRequestError('User already exists!'));
+      return failResponse(res, new BadRequestError('User already exists!'));
     }
 
     const newUser = User.build({
