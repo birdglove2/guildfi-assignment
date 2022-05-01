@@ -11,8 +11,10 @@ it('should return the detail of user', async () => {
     .send(dummyUserAttrs)
     .expect(200);
 
+  //TODO: should mock getBalance func.
   expect(res.body.result.address).toBe(dummyUserAttrs.address);
   expect(res.body.result.name).toBe(dummyUserAttrs.name);
+  expect(res.body.result.balance).toBeDefined();
 });
 
 // TODO: for further functionality ?
