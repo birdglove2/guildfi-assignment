@@ -8,14 +8,14 @@ interface IFindTransactionResponse {
 
 export class TransactionRepository {
   public static async findByWalletAddress(walletAddress: string, page: number, limit: number) {
-    const transactions = await Transaction.find({ walletAddress })
-      .limit(limit)
-      .skip((page - 1) * limit)
-      .sort({ timestamp: 'desc' })
-      .exec();
-
     const totalItems = await Transaction.count().exec();
     const pagination = Pagination.create(page, limit, totalItems);
+
+    const transactions = await Transaction.find({ walletAddress })
+      .limit(limit)
+      .skip((pagination.page - 1) * pagination.limit)
+      .sort({ timestamp: 'desc' })
+      .exec();
 
     return { transactions, pagination };
   }

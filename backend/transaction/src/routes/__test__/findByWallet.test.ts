@@ -12,12 +12,30 @@ it('should find by wallet address with pagination', async () => {
     await transaction.save();
   }
 
-  const result = await TransactionRepository.findByWalletAddress(
+  let result = await TransactionRepository.findByWalletAddress(
+    dummyTransactionAttrs.walletAddress,
+    4,
+    10
+  );
+
+  expect(result.pagination).toEqual({
+    page: 1,
+    limit: 10,
+    prevPage: 1,
+    nextPage: 1,
+    totalPage: 1,
+    totalItems: 10,
+  });
+
+  // console.log('tt', result.transactions);
+  expect(result.transactions.length).toBe(10);
+  // expect(result.transactions).toEqual(arr);
+
+  result = await TransactionRepository.findByWalletAddress(
     dummyTransactionAttrs.walletAddress,
     4,
     3
   );
-
   expect(result.pagination).toEqual({
     page: 4,
     limit: 3,
