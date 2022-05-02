@@ -3,15 +3,13 @@ import 'express-async-errors';
 import { json } from 'body-parser';
 import { errorHandler, NotFoundError } from './common';
 
-import { createUserRouter } from './routes/create';
-import { showUserRouter } from './routes/show';
+import { UserRouter } from './routes';
 
 const app = express();
 app.set('trust proxy', true);
 app.use(json());
 
-app.use(createUserRouter);
-app.use(showUserRouter);
+app.use('/api/v1/user', UserRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError('Route');

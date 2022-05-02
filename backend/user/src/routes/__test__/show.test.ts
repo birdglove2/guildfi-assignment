@@ -4,10 +4,10 @@ import { app } from '../../app';
 const dummyUserAttrs = global.dummyUserAttrs;
 
 it('should return the detail of user', async () => {
-  await request(app).post('/api/user').send(dummyUserAttrs).expect(201);
+  await request(app).post('/api/v1/user').send(dummyUserAttrs).expect(201);
 
   const res = await request(app)
-    .get(`/api/user/${dummyUserAttrs.address}`)
+    .get(`/api/v1/user/${dummyUserAttrs.address}`)
     .send(dummyUserAttrs)
     .expect(200);
 
