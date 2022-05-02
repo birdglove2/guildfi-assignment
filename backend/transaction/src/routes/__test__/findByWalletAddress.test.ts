@@ -27,9 +27,7 @@ it('should find by wallet address with pagination', async () => {
     totalItems: 10,
   });
 
-  // console.log('tt', result.transactions);
   expect(result.transactions.length).toBe(10);
-  // expect(result.transactions).toEqual(arr);
 
   result = await TransactionRepository.findByWalletAddress(
     dummyTransactionAttrs.walletAddress,
