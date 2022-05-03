@@ -20,5 +20,24 @@ export class TransactionRepository {
     return { transactions, pagination };
   }
 
-  public static async createTransaction(transaction: TransactionAttrs) {}
+  /**
+   * create double-entry tranasctions
+   * @param transaction transaction attrs that is used to create a transaction
+   * @returns two transactions both `From` and `To` side
+   */
+  public static async createTransaction(transaction: TransactionAttrs) {
+    const transactionFrom = Transaction.build(transaction);
+
+    const transactionTo = Transaction.build({
+      ...transaction,
+      walletAddress: transaction.to,
+      debit: transaction.credit,
+      credit: transaction.debit,
+    });
+
+    await transactionFrom.save();
+    await transactionTo.save();
+
+    return { transactionFrom, transactionTo };
+  }
 }
