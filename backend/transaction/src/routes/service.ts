@@ -8,7 +8,7 @@ import { ethers } from 'ethers';
 import { TransactionMethod } from '../models/transaction';
 import { Pagination } from '../models/pagination';
 
-import { GEMContract } from '../../../user/src/contract';
+import { GEMContract } from '../contract';
 
 const isTransactionMined = async (transactionHash: string) => {
   const contract = GEMContract.getContractInstance();
