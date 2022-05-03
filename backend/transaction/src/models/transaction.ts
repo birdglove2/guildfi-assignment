@@ -9,15 +9,17 @@ export enum TransactionMethod {
 export interface TransactionAttrs {
   walletAddress: string; // for ref to a user for credit/debit double-entry
   hash: string;
-  debit: ethers.BigNumber;
-  credit: ethers.BigNumber;
+  debit: string;
+  credit: string;
   from: string;
   to: string;
   timestamp: Date;
   method: TransactionMethod;
-  value: ethers.BigNumber;
-  gas: ethers.BigNumber;
+  value: string;
+  gas: string;
   block: number;
+  blockHash: string;
+  nonce: number;
 }
 
 // It is used as an intance of Transaction
@@ -28,18 +30,20 @@ interface TransactionModel extends mongoose.Model<TransactionDoc> {
 
 // TransactionDoc describes what are the attrs
 // inside Transaction after querying from the database
-interface TransactionDoc extends mongoose.Document {
+export interface TransactionDoc extends mongoose.Document {
   walletAddress: string; // for ref to a user for credit/debit double-entry
   hash: string;
-  debit: ethers.BigNumber;
-  credit: ethers.BigNumber;
+  debit: string;
+  credit: string;
   from: string;
   to: string;
   timestamp: Date;
   method: TransactionMethod;
-  value: ethers.BigNumber;
-  gas: ethers.BigNumber;
+  value: string;
+  gas: string;
   block: number;
+  blockHash: string;
+  nonce: number;
 }
 
 // schema for mongoDB
@@ -86,6 +90,14 @@ const transactionSchema = new mongoose.Schema(
       require: true,
     },
     block: {
+      type: Number,
+      require: true,
+    },
+    blockHash: {
+      type: String,
+      require: true,
+    },
+    nonce: {
       type: Number,
       require: true,
     },
