@@ -43,3 +43,5 @@ it('should find by wallet address with pagination', async () => {
     totalItems: 10,
   });
 });
+
+it('should balance debit/credit', async () => {});

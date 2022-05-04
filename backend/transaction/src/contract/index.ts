@@ -1,4 +1,3 @@
-import { BadRequestError } from '../common';
 import { ethers } from 'ethers';
 import { abi } from './abi/GEM.json';
 

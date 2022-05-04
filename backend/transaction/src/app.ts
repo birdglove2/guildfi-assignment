@@ -1,7 +1,7 @@
 import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
-import { errorHandler, NotFoundError } from './common';
+import { errorHandler, NotFoundError } from '@gfassignment/common';
 import cors from 'cors';
 
 import { TransactionRouter } from './routes';

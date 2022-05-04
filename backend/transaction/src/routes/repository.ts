@@ -1,5 +1,5 @@
-import { Transaction, TransactionAttrs, TransactionDoc } from '../models/transaction';
-import { Pagination, PaginationAttrs } from '../models/pagination';
+import { Transaction, TransactionAttrs, TransactionDoc } from 'models/transaction';
+import { Pagination, PaginationAttrs } from 'models/pagination';
 
 interface IFindTransactionResponse {
   transaction: TransactionDoc[];

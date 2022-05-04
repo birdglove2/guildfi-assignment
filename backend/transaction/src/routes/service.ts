@@ -1,14 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
-import { failResponse, successResponse } from '../common/utils';
-import { NotFoundError, BadRequestError } from '../common';
-import { TransactionCreatedPublisher } from '../events/publishers';
+import { failResponse, successResponse, BadRequestError } from '@gfassignment/common';
+import { TransactionCreatedPublisher } from 'events/publishers';
 import { TransactionRepository } from './repository';
 import { natsWrapper } from '../nats-wrapper';
 import { ethers } from 'ethers';
-import { TransactionMethod } from '../models/transaction';
-import { Pagination } from '../models/pagination';
-
-import { GEMContract } from '../contract';
+import { TransactionMethod } from 'models/transaction';
+import { Pagination } from 'models/pagination';
+import { GEMContract } from 'contract';
 
 const isTransactionMined = async (transactionHash: string) => {
   const contract = GEMContract.getContractInstance();
