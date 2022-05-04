@@ -1,11 +1,14 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { NotAuthorizedError, successResponse, validateRequest } from '../common';
 import { loginValidator } from './validator';
 import { ethers } from 'ethers';
-import { BadRequestError, failResponse } from '../common';
 import jwt from 'jsonwebtoken';
-import moment from 'moment';
-import { currentUser } from '../middlewares/current-user';
+import {
+  currentUser,
+  successResponse,
+  validateRequest,
+  BadRequestError,
+  failResponse,
+} from '@gfassignment/common';
 
 const router = express.Router();
 
