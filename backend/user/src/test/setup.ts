@@ -1,11 +1,12 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import { UserAttrs } from '../models/user';
+import { UserAttrs } from 'models/user';
 
 jest.mock('../nats-wrapper');
 
 declare global {
   var dummyUserAttrs: UserAttrs;
+  var dummyUserAttrs2: UserAttrs;
 }
 
 let mongo: any;
@@ -36,5 +37,10 @@ afterAll(async () => {
 
 global.dummyUserAttrs = {
   address: '0x5f958971072bf53C4C577b44d7a8a04ADce904Ba',
-  name: 'bird',
+  name: 'wallet 1',
+};
+
+global.dummyUserAttrs2 = {
+  address: '0x7fDBf34B6a59b9E0baF98032f53b8a8eBC1ba65F',
+  name: 'wallet 2',
 };

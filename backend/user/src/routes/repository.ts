@@ -1,10 +1,14 @@
-import { User, UserAttrs } from '../models/user';
+import { InternalServerError } from '@gfassignment/common';
+import { User, UserAttrs } from 'models/user';
 
 export class UserRepository {
   public static async findByAddress(address: string) {
-    const user = await User.find({ address: address });
+    const user = await User.find({ address });
     if (user.length === 1) {
       return user[0];
+    }
+    if (user.length > 1) {
+      throw new InternalServerError('More than 1 user is found!');
     }
     return null;
   }
