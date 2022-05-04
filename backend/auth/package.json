@@ -4,21 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "local": "JWT_KEY=test APP_ENV=local ts-node-dev src/index.ts",
+    "local": "NODE_PATH=src JWT_KEY=test APP_ENV=local ts-node-dev src/index.ts",
     "start": "ts-node-dev src/index.ts",
     "test": "jest --watchAll --no-cache --verbose --detectOpenHandles"
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "setupFilesAfterEnv": [
-      "./src/test/setup.ts"
-    ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@gfassignment/common": "^1.0.3",
     "@types/body-parser": "^1.19.2",
     "@types/cookie-session": "^2.0.44",
     "@types/cors": "^2.8.12",
