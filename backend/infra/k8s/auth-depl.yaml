@@ -16,6 +16,8 @@ spec:
         - name: auth
           image: guildfi-assignment/auth
           env:
+            - name: NODE_PATH
+              value: 'src'
             - name: NATS_CLIENT_ID
               valueFrom:
                 fieldRef:
@@ -26,6 +28,11 @@ spec:
               value: guildfi-assignment
             - name: MONGO_URI
               value: 'mongodb://auth-mongo-srv:27017/auth'
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
 ---
 apiVersion: v1
 kind: Service

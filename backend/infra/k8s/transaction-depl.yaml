@@ -16,6 +16,8 @@ spec:
         - name: transaction
           image: guildfi-assignment/transaction
           env:
+            - name: NODE_PATH
+              value: 'src'
             - name: NATS_CLIENT_ID
               valueFrom:
                 fieldRef:

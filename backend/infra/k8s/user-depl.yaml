@@ -16,6 +16,8 @@ spec:
         - name: user
           image: guildfi-assignment/user
           env:
+            - name: NODE_PATH
+              value: 'src'
             - name: NATS_CLIENT_ID
               valueFrom:
                 fieldRef:
@@ -26,6 +28,11 @@ spec:
               value: guildfi-assignment
             - name: MONGO_URI
               value: 'mongodb://user-mongo-srv:27017/user'
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
 ---
 apiVersion: v1
 kind: Service
