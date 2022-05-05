@@ -4,7 +4,7 @@ import { json } from 'body-parser';
 import { errorHandler, NotFoundError } from '@gfassignment/common';
 import cors from 'cors';
 
-import { AuthRouter } from './routes';
+import { AuthRouter } from './api';
 
 const app = express();
 app.use(cors());

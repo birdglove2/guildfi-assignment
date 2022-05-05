@@ -36,7 +36,6 @@ it('should return 400 if not signup yet', async () => {
     .expect(400);
 
   const result = res.body.result;
-  console.log(result);
   expect(result[0].message).toEqual('Invalid email or password');
 });
 
