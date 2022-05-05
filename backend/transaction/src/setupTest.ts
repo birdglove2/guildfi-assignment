@@ -1,9 +1,9 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import { TransactionAttrs, TransactionMethod } from '../models/transaction';
+import { TransactionAttrs, TransactionMethod } from './models/transaction';
 import { ethers } from 'ethers';
 
-jest.mock('../nats-wrapper');
+jest.mock('./nats-wrapper');
 
 declare global {
   var dummyTransactionAttrs: TransactionAttrs;

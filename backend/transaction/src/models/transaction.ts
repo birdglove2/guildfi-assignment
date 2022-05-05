@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { BigNumber, ethers } from 'ethers';
 
 export enum TransactionMethod {
   Transfer = 'Transfer',

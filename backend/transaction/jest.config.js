@@ -5,6 +5,6 @@ module.exports = {
     'node_modules/variables/.+\\.(j|t)sx?$': 'ts-jest',
   },
   transformIgnorePatterns: ['node_modules/(?!variables/.*)'],
-  setupFilesAfterEnv: ['./src/test/setup.ts'],
+  setupFilesAfterEnv: ['./src/setupTest.ts'],
   modulePaths: ['node_modules', '<rootDir>/src'],
 };

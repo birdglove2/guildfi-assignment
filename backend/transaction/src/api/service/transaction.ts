@@ -71,6 +71,7 @@ export class TransactionService {
       blockHash: tx.blockHash,
       nonce: tx.nonce,
     };
+
     // retrieve double-entry txs
     const { transactionFrom, transactionTo } = await TransactionRepository.createTransaction(
       transactionAttrs
