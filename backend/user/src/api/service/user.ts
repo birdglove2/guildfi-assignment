@@ -6,17 +6,21 @@ import {
   NotFoundError,
 } from '@gfassignment/common';
 import { UserRepository } from '../repository/user';
-import { UserCreatedPublisher } from 'events/publishers';
-import { natsWrapper } from 'nats-wrapper';
+import { UserCreatedPublisher, UserUpdatedPublisher } from 'events/publishers';
+import { natsWrapper } from '../../nats-wrapper';
 import { GEMContract } from 'contract';
 import { ethers } from 'ethers';
-import { UserAttrs } from 'models/user';
+import { UserAttrs, UpdateUserAttrs } from 'models/user';
 
 export class UserService {
   public static async findByField(field: string, value: string) {
     const user = await UserRepository.findByField(field, value);
     if (!user) {
       throw new NotFoundError('User');
+    }
+
+    if (!user.walletAddress) {
+      return { ...user.toJSON(), balance: 0 };
     }
 
     //TODO: too slow need caching
@@ -33,15 +37,28 @@ export class UserService {
     }
 
     const newUser = await UserRepository.createUser(userAttrs);
+
     new UserCreatedPublisher(natsWrapper.client).publish({
       authId: newUser.authId,
       email: newUser.email,
-      walletAddress: newUser.walletAddress,
       name: newUser.name,
       version: newUser.version,
     });
 
     return newUser;
+  }
+
+  public static async updateUser(updateUserAttrs: UpdateUserAttrs) {
+    const updatedUser = await UserRepository.updateUser(updateUserAttrs);
+    new UserUpdatedPublisher(natsWrapper.client).publish({
+      authId: updatedUser.authId,
+      email: updatedUser.email,
+      walletAddress: updatedUser.walletAddress,
+      name: updatedUser.name,
+      version: updatedUser.version,
+    });
+
+    return updatedUser;
   }
 
   //WARNING: how to get privateKey ??

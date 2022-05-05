@@ -1,6 +1,6 @@
 import { User } from '../user';
 
-const dummyUserAttrs = global.dummyUserAttrs;
+const dummyUserAttrs = global.dummyUserAttrs1;
 
 it('can create and get user from db', async () => {
   const user = User.build(dummyUserAttrs);

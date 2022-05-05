@@ -1,12 +1,19 @@
 import mongoose from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
+export interface UpdateUserAttrs {
+  authId: string;
+  email?: string;
+  name?: string;
+  walletAddress?: string;
+}
+
 // UserAttrs are properties requried to create a new User
 export interface UserAttrs {
   authId: string;
   email: string;
   name: string;
-  walletAddress: string;
+  walletAddress?: string;
 }
 
 // It is used as an intance of User
@@ -42,7 +49,7 @@ const userSchema = new mongoose.Schema(
     },
     walletAddress: {
       type: String,
-      required: true,
+      required: false,
       unique: true,
     },
     name: {

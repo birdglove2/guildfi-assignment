@@ -5,21 +5,19 @@ import jwt from 'jsonwebtoken';
 import { GEMContract } from 'contract';
 import { Wallet } from 'ethers';
 import request from 'supertest';
-import { app } from '../app';
+import { app } from './app';
 
-jest.mock('../nats-wrapper');
-
-interface ICreateUserResponse {
-  user: UserAttrs;
-  token: string;
-}
+jest.mock('./nats-wrapper');
 
 declare global {
-  var dummyUserAttrs0: UserAttrs;
+  var dummyCreateUserAttrs: UserAttrs;
   var dummyUserAttrs1: UserAttrs;
   var dummyUserAttrs2: UserAttrs;
   function login(): string;
-  function createUser(): Promise<ICreateUserResponse>;
+  function createUser(): Promise<{
+    user: UserAttrs;
+    token: string;
+  }>;
 }
 
 let mongo: any;
@@ -27,7 +25,6 @@ beforeAll(async () => {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
   process.env.JWT_KEY = 'testjwtkey';
   process.env.SIGN_MESSAGE = 'test message';
-
   process.env.WALLET0 = '0xFde5d775c0a8EC717309e60d76c753E2f6EE36AB';
   process.env.PRIVATE_KEY0 = '7e6d0622f5db3dd8aaedea5cc19482fed03e2183291c38289bb060d1482a86b4';
 
@@ -58,10 +55,9 @@ afterAll(async () => {
   }, 1000);
 });
 
-global.dummyUserAttrs0 = {
+global.dummyCreateUserAttrs = {
   authId: '6273b45bbeb6a1ca47fedbec',
-  email: 'test0@test.com',
-  walletAddress: '0xFde5d775c0a8EC717309e60d76c753E2f6EE36AB',
+  email: 'testadsfasdfads0@test.com',
   name: 'wallet 0',
 };
 
@@ -80,15 +76,12 @@ global.dummyUserAttrs2 = {
 };
 
 global.login = () => {
-  // Build a JWT payload.  { id, email }
   const payload = {
     authId: new mongoose.Types.ObjectId().toHexString(),
-    email: 'test@test.com',
+    email: 'bird@test.com',
   };
 
-  // Create the JWT!
   const token = jwt.sign(payload, process.env.JWT_KEY!);
-
   return token;
 };
 
@@ -97,7 +90,7 @@ global.createUser = async () => {
   const res = await request(app)
     .post('/api/v1/user')
     .set('Authorization', `Bearer ${token}`)
-    .send({ ...dummyUserAttrs0, signature: process.env.SIGNATURE0 })
+    .send({ ...dummyCreateUserAttrs, signature: process.env.SIGNATURE0 })
     .expect(201);
 
   return { token, user: res.body.result };

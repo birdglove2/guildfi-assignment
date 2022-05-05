@@ -3,7 +3,7 @@ import 'express-async-errors';
 import { json } from 'body-parser';
 import { errorHandler, NotFoundError } from '@gfassignment/common';
 
-import { UserRouter } from './api';
+import { UserRouter } from './api/router';
 
 const app = express();
 app.set('trust proxy', true);

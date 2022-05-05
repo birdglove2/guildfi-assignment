@@ -2,7 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 
 it('should return the detail of user by authId or walletAddress', async () => {
-  const { user } = await global.createUser();
+  const { user, token } = await global.createUser();
 
   let res = await request(app).get(`/api/v1/user/${user.authId}`).expect(200);
 
@@ -11,9 +11,17 @@ it('should return the detail of user by authId or walletAddress', async () => {
   expect(getUser1.name).toBe(user.name);
   expect(getUser1.balance).toBeDefined();
 
-  res = await request(app).get(`/api/v1/user/walletAddress/${user.walletAddress}`).expect(200);
+  await request(app)
+    .post('/api/v1/user/connectWallet')
+    .set('Authorization', `Bearer ${token}`)
+    .send({ signature: process.env.SIGNATURE0, walletAddress: process.env.WALLET0 })
+    .expect(204);
+
+  res = await request(app).get(`/api/v1/user/walletAddress/${process.env.WALLET0}`);
+
   const getUser2 = res.body.result;
-  expect(getUser1).toEqual(getUser2);
+  expect(getUser1.authId).toEqual(getUser2.authId);
+  expect(getUser1.authId.balance).toEqual(getUser2.authId.balance);
 });
 
 it('should return 404 if user not found', async () => {
