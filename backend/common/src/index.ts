@@ -19,3 +19,4 @@ export * from './events/transaction-created-event';
 export * from './utils';
 
 export * from './middlewares/current-credentials';
+export * from './middlewares/require-auth';
