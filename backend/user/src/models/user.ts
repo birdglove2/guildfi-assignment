@@ -3,8 +3,9 @@ import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 // UserAttrs are properties requried to create a new User
 export interface UserAttrs {
-  address: string;
+  email: string;
   name: string;
+  walletAddress: string;
 }
 
 // It is used as an intance of User
@@ -16,8 +17,9 @@ interface UserModel extends mongoose.Model<UserDoc> {
 // UserDoc describes what are the attrs
 // inside User after querying from the database
 interface UserDoc extends mongoose.Document {
-  address: string;
-  name: number;
+  email: string;
+  name: string;
+  walletAddress: string;
   version: number;
   createdAt: string;
   updatedAt: string;
@@ -26,7 +28,12 @@ interface UserDoc extends mongoose.Document {
 // schema for mongoDB
 const userSchema = new mongoose.Schema(
   {
-    address: {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    walletAddress: {
       type: String,
       required: true,
       unique: true,
