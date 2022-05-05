@@ -5,9 +5,13 @@ const dummyUserAttrs = global.dummyUserAttrs;
 it('can create and get user from db', async () => {
   const user = User.build(dummyUserAttrs);
   await user.save();
-  const fetchUser = await User.find({ address: user.address });
-  expect(fetchUser.length).toBe(1);
-  expect(fetchUser[0].address).toEqual(user.address);
+  let fetchUser = await User.findOne({ walletAddress: user.walletAddress });
+  expect(fetchUser).not.toBeNull();
+  expect(fetchUser!.walletAddress).toEqual(user.walletAddress);
+
+  fetchUser = await User.findOne({ authId: user.authId });
+  expect(fetchUser).not.toBeNull();
+  expect(fetchUser!.walletAddress).toEqual(user.walletAddress);
 });
 
 it('increments the version number on multiple saves', async () => {
