@@ -14,6 +14,12 @@ declare global {
   }
 }
 
+/**
+ * Middleware to attach credentials to the req. for using in next step as authentication process
+ * Not throwing here for some case e.g. users need to view other user info
+ * if user credentials matched with the looking person, then show some private data
+ * if not, show public data
+ */
 export const currentCredentials = (req: Request, res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
   if (!authorization || !authorization.startsWith('Bearer ')) {
