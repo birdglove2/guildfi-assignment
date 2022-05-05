@@ -5,7 +5,7 @@ import {
   BadRequestError,
   NotFoundError,
 } from '@gfassignment/common';
-import { UserRepository } from './repository';
+import { UserRepository } from '../repository/user';
 import { UserCreatedPublisher } from 'events/publishers';
 import { natsWrapper } from 'nats-wrapper';
 import { GEMContract } from 'contract';
@@ -14,26 +14,27 @@ import { UserAttrs } from 'models/user';
 
 export class UserService {
   public static async findByField(field: string, value: string) {
-    if (field === 'walletAddress') {
-      return UserRepository.findByWalletAddress(field);
+    const user = await UserRepository.findByField(field, value);
+    if (!user) {
+      throw new NotFoundError('User');
     }
-    if (field === 'id') {
-      return UserRepository.findById(value);
-    }
-    return null;
+
+    //TODO: too slow need caching
+    const balance = await GEMContract.getBalance(user.walletAddress);
+    return { ...user.toJSON(), balance };
   }
 
   //TODO: let user sign message, then retreive the address from it instead of sending pure address
   // or let frontend authenticates address before sending address via api
   public static async createUser(userAttrs: UserAttrs) {
-    const user = await UserRepository.findByEmail(userAttrs.email);
+    const user = await UserRepository.findByField('authId', userAttrs.authId);
     if (user) {
       throw new BadRequestError('User already exists!');
     }
 
     const newUser = await UserRepository.createUser(userAttrs);
     new UserCreatedPublisher(natsWrapper.client).publish({
-      id: newUser.id,
+      authId: newUser.authId,
       email: newUser.email,
       walletAddress: newUser.walletAddress,
       name: newUser.name,
@@ -41,22 +42,6 @@ export class UserService {
     });
 
     return newUser;
-  }
-
-  public static async showUserWithPrivateData(address: string) {}
-
-  public static async showUser(address: string) {
-    const user = await UserRepository.findByWalletAddress(address);
-    console.log(user, address);
-    if (!user) {
-      return;
-    }
-
-    //TODO: too slow need caching
-    const balance = await GEMContract.getBalance(address);
-
-    const result = { ...user.toJSON(), balance };
-    return result;
   }
 
   //WARNING: how to get privateKey ??

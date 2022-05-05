@@ -1,4 +1,3 @@
-import { NotAuthorizedError } from '@gfassignment/common';
 import { ethers } from 'ethers';
 
 // message used to sign from frontend to prove identity of wallet address
@@ -13,6 +12,7 @@ export class WalletAddress {
       // to prevent different message return different wallet address
       return false;
     }
+
     return true;
   }
 }

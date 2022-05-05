@@ -37,14 +37,14 @@ export class GEMContract {
    */
   public static transfer = async (privateKey: string, to: string, amount: ethers.BigNumber) => {
     const { contract, provider } = this.getContractInstance();
-
     const wallet = new ethers.Wallet(privateKey, provider);
+
     const signedContract = contract.connect(wallet);
 
-    const callable = await signedContract.callStatic.transfer(to, amount);
-    if (!callable) {
-      return;
-    }
+    // const callable = await signedContract.callStatic.transfer(to, amount);
+    // if (!callable) {
+    //   throw new BadRequestError('User has insufficient amount of token');
+    // }
 
     let tx = await signedContract.transfer(to, amount);
     await tx.wait();

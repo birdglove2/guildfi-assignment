@@ -1,9 +1,9 @@
 import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
-import { errorHandler, NotFoundError } from './common';
+import { errorHandler, NotFoundError } from '@gfassignment/common';
 
-import { UserRouter } from './routes';
+import { UserRouter } from './api';
 
 const app = express();
 app.set('trust proxy', true);
