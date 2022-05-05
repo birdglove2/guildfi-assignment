@@ -6,7 +6,7 @@
   "scripts": {
     "local": "NODE_PATH=src JWT_KEY=test APP_ENV=local ts-node-dev src/index.ts",
     "start": "ts-node-dev src/index.ts",
-    "test": "JWT_KEY=test jest --watchAll --no-cache --verbose --detectOpenHandles"
+    "test": "jest --watchAll --no-cache --verbose --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
