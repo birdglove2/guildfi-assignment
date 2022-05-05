@@ -4,7 +4,7 @@ import { json } from 'body-parser';
 import { errorHandler, NotFoundError } from '@gfassignment/common';
 import cors from 'cors';
 
-import { TransactionRouter } from './routes';
+import { TransactionRouter } from './api/router';
 
 const app = express();
 app.use(cors());

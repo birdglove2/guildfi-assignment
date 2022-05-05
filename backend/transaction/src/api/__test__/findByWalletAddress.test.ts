@@ -1,7 +1,7 @@
-import { Transaction } from '../../models/transaction';
 import request from 'supertest';
 import { app } from '../../app';
-import { TransactionRepository } from '../repository';
+import { Transaction } from '../../models/transaction';
+import { TransactionRepository } from '../repository/transaction';
 
 const dummyTransactionAttrs = global.dummyTransactionAttrs;
 

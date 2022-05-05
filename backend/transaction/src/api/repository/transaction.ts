@@ -1,5 +1,5 @@
 import { Transaction, TransactionAttrs, TransactionDoc } from 'models/transaction';
-import { Pagination, PaginationAttrs } from 'models/pagination';
+import { Pagination, PaginationAttrs } from 'api/service/pagination';
 
 interface IFindTransactionResponse {
   transaction: TransactionDoc[];
@@ -7,7 +7,15 @@ interface IFindTransactionResponse {
 }
 
 export class TransactionRepository {
+  /**
+   * Given the wallet address, find all transactions with pagination
+   * @param walletAddress
+   * @param page
+   * @param limit to limit number of result
+   * @returns the limit number of transactions on the page, and the pagination detail
+   */
   public static async findByWalletAddress(walletAddress: string, page: number, limit: number) {
+    //TOFIX: wrong count, should count found items not all items
     const totalItems = await Transaction.count().exec();
     const pagination = Pagination.create(page, limit, totalItems);
 

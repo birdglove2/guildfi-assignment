@@ -1,4 +1,4 @@
-import { Pagination } from '../pagination';
+import { Pagination } from '../../api/service/pagination';
 
 it('should return correct pagination', () => {
   let pagination = Pagination.create(1, 10, 10);
