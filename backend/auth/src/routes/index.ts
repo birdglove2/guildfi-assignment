@@ -1,16 +1,64 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { loginValidator } from './validator';
+import { loginValidator, signupValidator } from './validator';
 import { ethers } from 'ethers';
 import jwt from 'jsonwebtoken';
 import {
   currentUser,
   successResponse,
   validateRequest,
+  BadRequestError,
   NotAuthorizedError,
 } from '@gfassignment/common';
-import { MESSAGE } from 'models/credential';
+import { MESSAGE } from 'models/credential.old';
+import { AuthService } from './service/auth';
 
 const router = express.Router();
+
+router.post('/signup', signupValidator, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email, password, confirmPassword } = req.body;
+
+    if (password !== confirmPassword) {
+      throw new BadRequestError('Password and confirm password are not matched');
+    }
+
+    const newUser = await AuthService.createUser({ email, password });
+
+    // Generate JWT token
+    const token = jwt.sign(
+      {
+        id: newUser.id,
+        email: newUser.email,
+      },
+      process.env.JWT_KEY!
+    );
+
+    successResponse(res, 201, { user: newUser, token });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/login', loginValidator, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await AuthService.findByCredentials({ email, password });
+
+    // Generate JWT token
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+      },
+      process.env.JWT_KEY!
+    );
+
+    successResponse(res, 200, { user, token });
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.get('/message', async (req: Request, res: Response) => {
   return successResponse(res, 200, { message: MESSAGE });
@@ -21,7 +69,7 @@ router.get('/currentuser', currentUser, async (req: Request, res: Response) => {
 });
 
 router.post(
-  '/login',
+  '/verify',
   loginValidator,
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
