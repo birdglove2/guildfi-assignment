@@ -4,7 +4,7 @@ import { BadRequestError } from '@gfassignment/common';
 import { Password } from './password';
 
 export class AuthService {
-  public static async createUser(authAttrs: AuthAttrs) {
+  public static async createCredentials(authAttrs: AuthAttrs) {
     const { email, password } = authAttrs;
     const existingUser = await AuthRepository.findByEmail(email);
 
@@ -13,7 +13,7 @@ export class AuthService {
     }
 
     const hashedPassword = await Password.hash(password);
-    const newUser = await AuthRepository.createUser({ email, password: hashedPassword });
+    const newUser = await AuthRepository.createCredentials({ email, password: hashedPassword });
 
     return newUser;
   }

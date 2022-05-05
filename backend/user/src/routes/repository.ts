@@ -2,18 +2,19 @@ import { InternalServerError } from '@gfassignment/common';
 import { User, UserAttrs } from 'models/user';
 
 export class UserRepository {
-  public static async findByAddress(address: string) {
-    const user = await User.find({ address });
-    if (user.length === 1) {
-      return user[0];
-    }
-    if (user.length > 1) {
-      throw new InternalServerError('More than 1 user is found!');
-    }
-    return null;
+  static async findById(id: string) {
+    return await User.findById(id);
   }
 
-  public static async createUser(user: UserAttrs) {
+  static async findByEmail(email: string) {
+    return await User.findOne({ email });
+  }
+
+  static async findByWalletAddress(walletAddress: string) {
+    return await User.findOne({ walletAddress });
+  }
+
+  static async createUser(user: UserAttrs) {
     const newUser = User.build(user);
     await newUser.save();
     return newUser;

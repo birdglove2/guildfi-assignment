@@ -22,12 +22,12 @@ router.post('/signup', signupValidator, async (req: Request, res: Response, next
       throw new BadRequestError('Password and confirm password are not matched');
     }
 
-    const newUser = await AuthService.createUser({ email, password });
+    const newUser = await AuthService.createCredentials({ email, password });
 
     // Generate JWT token
     const token = jwt.sign(
       {
-        id: newUser.id,
+        authId: newUser.id,
         email: newUser.email,
       },
       process.env.JWT_KEY!
@@ -48,7 +48,7 @@ router.post('/login', loginValidator, async (req: Request, res: Response, next: 
     // Generate JWT token
     const token = jwt.sign(
       {
-        id: user.id,
+        authId: user.id,
         email: user.email,
       },
       process.env.JWT_KEY!

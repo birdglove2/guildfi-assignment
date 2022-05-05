@@ -1,19 +1,20 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-export interface UserPayload {
-  walletAddress: string;
+export interface AuthPayload {
+  authId: string;
+  email: string;
 }
 
 declare global {
   namespace Express {
     interface Request {
-      currentUser?: UserPayload;
+      currentCredentials?: AuthPayload;
     }
   }
 }
 
-export const currentUser = (req: Request, res: Response, next: NextFunction) => {
+export const currentCredentials = (req: Request, res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
   if (!authorization || !authorization.startsWith('Bearer ')) {
     return next();
@@ -22,8 +23,8 @@ export const currentUser = (req: Request, res: Response, next: NextFunction) => 
   const token = authorization.substring(7);
 
   try {
-    const payload = jwt.verify(token, process.env.JWT_KEY!) as UserPayload;
-    req.currentUser = payload;
+    const payload = jwt.verify(token, process.env.JWT_KEY!) as AuthPayload;
+    req.currentCredentials = payload;
     next();
   } catch (err) {
     return next();

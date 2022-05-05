@@ -1,5 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
-import { failResponse, successResponse, BadRequestError } from '@gfassignment/common';
+import {
+  failResponse,
+  successResponse,
+  BadRequestError,
+  NotFoundError,
+} from '@gfassignment/common';
 import { UserRepository } from './repository';
 import { UserCreatedPublisher } from 'events/publishers';
 import { natsWrapper } from 'nats-wrapper';
@@ -8,10 +13,20 @@ import { ethers } from 'ethers';
 import { UserAttrs } from 'models/user';
 
 export class UserService {
+  public static async findByField(field: string, value: string) {
+    if (field === 'walletAddress') {
+      return UserRepository.findByWalletAddress(field);
+    }
+    if (field === 'id') {
+      return UserRepository.findById(value);
+    }
+    return null;
+  }
+
   //TODO: let user sign message, then retreive the address from it instead of sending pure address
   // or let frontend authenticates address before sending address via api
   public static async createUser(userAttrs: UserAttrs) {
-    const user = await UserRepository.findByAddress(userAttrs.address);
+    const user = await UserRepository.findByEmail(userAttrs.email);
     if (user) {
       throw new BadRequestError('User already exists!');
     }
@@ -19,7 +34,8 @@ export class UserService {
     const newUser = await UserRepository.createUser(userAttrs);
     new UserCreatedPublisher(natsWrapper.client).publish({
       id: newUser.id,
-      address: newUser.address,
+      email: newUser.email,
+      walletAddress: newUser.walletAddress,
       name: newUser.name,
       version: newUser.version,
     });
@@ -30,7 +46,7 @@ export class UserService {
   public static async showUserWithPrivateData(address: string) {}
 
   public static async showUser(address: string) {
-    const user = await UserRepository.findByAddress(address);
+    const user = await UserRepository.findByWalletAddress(address);
     console.log(user, address);
     if (!user) {
       return;

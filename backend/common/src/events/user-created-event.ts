@@ -4,8 +4,9 @@ export interface UserCreatedEvent {
   subject: Subjects.UserCreated;
   data: {
     id: string;
+    email: string;
+    walletAddress: string;
+    name: string;
     version: number;
-    address: string;
-    name: number;
   };
 }

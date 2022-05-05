@@ -5,7 +5,7 @@ export class AuthRepository {
     return await Auth.findOne({ email });
   }
 
-  public static async createUser(authAttrs: AuthAttrs) {
+  public static async createCredentials(authAttrs: AuthAttrs) {
     const user = Auth.build(authAttrs);
     await user.save();
     return user;

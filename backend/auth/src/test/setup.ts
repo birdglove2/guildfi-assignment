@@ -1,6 +1,6 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import { CredentialAttrs } from 'models/credential';
+import { CredentialAttrs } from 'models/credential.old';
 jest.mock('../nats-wrapper');
 
 declare global {
