@@ -1,4 +1,5 @@
 import nats, { Stan } from 'node-nats-streaming';
+import { logger } from '@gfassignment/common';
 
 class NatsWrapper {
   private _client?: Stan;
