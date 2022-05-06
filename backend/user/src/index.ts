@@ -40,7 +40,7 @@ const start = async () => {
   const port = process.env.PORT ? process.env.PORT : 8888;
 
   app.listen(port, () => {
-    console.log(process.env.APP_ENV);
+    console.log('APP_ENVIRONMENT===', process.env.APP_ENV);
     console.log(`Listening on port ${port}!!!!!!!!`);
   });
 };
