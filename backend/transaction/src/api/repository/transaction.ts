@@ -1,12 +1,12 @@
-import { Transaction, TransactionAttrs, TransactionDoc } from 'models/transaction';
+import { Transaction, TransactionAttrs } from 'models/transaction';
 import { Pagination, PaginationAttrs } from 'api/service/pagination';
-
-interface IFindTransactionResponse {
-  transaction: TransactionDoc[];
-  pagination: PaginationAttrs;
-}
+import { knex } from 'db';
 
 export class TransactionRepository {
+  // public static async listTransaction(walletAddress: string, page: number, limit: number) {
+  //   Transaction.where('');
+  // }
+
   /**
    * Given the wallet address, find all transactions with pagination
    * @param walletAddress
@@ -33,19 +33,23 @@ export class TransactionRepository {
    * @param transaction transaction attrs that is used to create a transaction
    * @returns two transactions both `From` and `To` side
    */
-  public static async createTransaction(transaction: TransactionAttrs) {
+  public static async createTransactionOld(transaction: TransactionAttrs) {
     const transactionFrom = Transaction.build(transaction);
 
-    const transactionTo = Transaction.build({
-      ...transaction,
-      walletAddress: transaction.to,
-      debit: transaction.credit,
-      credit: transaction.debit,
-    });
+    // const transactionTo = Transaction.build({
+    //   ...transaction,
+    //   walletAddress: transaction.to,
+    //   debit: transaction.credit,
+    //   credit: transaction.debit,
+    // });
 
-    await transactionFrom.save();
-    await transactionTo.save();
+    // await transactionFrom.save();
+    // await transactionTo.save();
 
-    return { transactionFrom, transactionTo };
+    return { transactionFrom, transactionTo: 'x' };
+  }
+
+  public static async createTransaction(transaction: TransactionAttrs) {
+    return Transaction.insert(transaction);
   }
 }
