@@ -1,0 +1,6 @@
+{"level":"info","message":"APP_ENVIRONMENT===","timestamp":"2022-05-07 00:23:00"}
+{"level":"info","message":"Listening on port 8888!!!!!!!!","timestamp":"2022-05-07 00:23:00"}
+{"level":"warn","message":[{"message":"Not authorized"}],"timestamp":"2022-05-07 00:23:02"}
+{"level":"http","message":"POST /api/v1/user 401 57 - 1.817 ms\n","timestamp":"2022-05-07 00:23:02"}
+{"level":"warn","message":[{"message":"Not authorized"}],"timestamp":"2022-05-07 00:23:05"}
+{"level":"http","message":"POST /api/v1/user 401 57 - 1.588 ms\n","timestamp":"2022-05-07 00:23:05"}
