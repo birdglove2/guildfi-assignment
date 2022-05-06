@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { Transaction } from '../../models/transaction';
+import { Transaction } from '../../models/transaction.old.ts';
 import { TransactionRepository } from '../repository/transaction';
 
 const dummyTransactionAttrs = global.dummyTransactionAttrs;
