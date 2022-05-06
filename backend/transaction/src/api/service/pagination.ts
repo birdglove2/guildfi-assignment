@@ -45,7 +45,7 @@ export class Pagination {
    * @param limit
    * @returns object of page and limit in number type
    */
-  public static clean(page: string, limit: string) {
+  public static clean(page?: string, limit?: string) {
     if (!page || +page <= 0) {
       page = defaultPage.toString();
     }
