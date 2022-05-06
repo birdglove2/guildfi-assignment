@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { InternalServerError } from '../errors/internal-server-error';
 import { CustomError } from '../errors/custom-error';
-import { failResponse } from '../utils';
+import { failResponse } from '../utils/response';
 import { logger } from '../utils/logger';
 
 /**
@@ -12,9 +12,6 @@ import { logger } from '../utils/logger';
  */
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof CustomError) {
-    if (err.message) {
-      logger.warn(err.message);
-    }
     return failResponse(res, err);
   }
 

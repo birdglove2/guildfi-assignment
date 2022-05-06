@@ -1,5 +1,6 @@
 import { Response } from 'express';
 import { CustomError } from '../errors/custom-error';
+import { logger } from './logger';
 
 // Result Response for sending back api
 interface IResponse {
@@ -33,6 +34,6 @@ export const failResponse = (res: Response, err: CustomError) => {
     success: false,
     result: err.serializeErrors(),
   };
-
+  logger.warn(err.serializeErrors());
   return res.status(err.statusCode).json(response);
 };
