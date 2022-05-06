@@ -60,10 +60,10 @@
 
 ### Transaction Table
 
-| hash | from | to  | method   | amount | gas    | block  | blockHash | nonce |
-| ---- | ---- | --- | -------- | ------ | ------ | ------ | --------- | ----- |
-| TX1  | A    | B   | Transfer | 200    | 178920 | 213344 | BX213     | 33    |
-| TX2  | C    | A   | Transfer | 100    | 165433 | 213345 | BX214     | 34    |
+| hash | from | to   | method   | amount | gas    | block  | blockHash | nonce |
+| ---- | ---- | ---- | -------- | ------ | ------ | ------ | --------- | ----- |
+| TX1  | WA01 | WB02 | Transfer | 200    | 178920 | 213344 | BX213     | 33    |
+| TX2  | WC03 | WA01 | Transfer | 100    | 165433 | 213345 | BX214     | 34    |
 
 ### Transaction_Record Table
 
