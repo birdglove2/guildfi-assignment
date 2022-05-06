@@ -2,6 +2,7 @@ import { createDbTables } from 'db';
 import mongoose from 'mongoose';
 import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
+import { logger } from '@gfassignment/common';
 
 const start = async () => {
   if (process.env.APP_ENV !== 'local') {
@@ -24,7 +25,7 @@ const start = async () => {
         process.env.NATS_URL
       );
       natsWrapper.client.on('close', () => {
-        console.log('NATS connection closed!');
+        logger.info('NATS connection closed!');
         process.exit();
       });
       process.on('SIGINT', () => natsWrapper.client.close());
@@ -39,8 +40,8 @@ const start = async () => {
   const port = process.env.PORT ? process.env.PORT : 8888;
 
   app.listen(port, () => {
-    console.log(process.env.APP_ENV);
-    console.log(`Listening on port ${port}!!!!!!!!`);
+    logger.info(process.env.APP_ENV);
+    logger.info(`Listening on port ${port}!!!!!!!!`);
   });
 };
 

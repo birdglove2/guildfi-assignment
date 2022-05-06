@@ -2,6 +2,7 @@ import { Listener, UserUpdatedEvent, Subjects } from '@gfassignment/common';
 import { Message } from 'node-nats-streaming';
 import { queueGroupName } from './queue-group-name';
 import { UserService } from 'api/service/user';
+import { logger } from '@gfassignment/common';
 
 export class UserUpdatedListener extends Listener<UserUpdatedEvent> {
   subject: Subjects.UserUpdated = Subjects.UserUpdated;
@@ -20,7 +21,7 @@ export class UserUpdatedListener extends Listener<UserUpdatedEvent> {
 
       msg.ack();
     } catch (err) {
-      console.log('Listen Update User Event Failed!: ', err);
+      logger.info('Listen Update User Event Failed!: ', err);
     }
   }
 }

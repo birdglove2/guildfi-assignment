@@ -1,5 +1,6 @@
 import { Stan } from 'node-nats-streaming';
 import { Subjects } from './subjects';
+import { logger } from '../utils/logger';
 
 interface Event {
   subject: Subjects;
@@ -21,8 +22,7 @@ export abstract class Publisher<T extends Event> {
           return reject(err);
         }
 
-        //TODO: logs every publish event
-        console.log('Event published to subject', this.subject);
+        logger.info('Event published to subject', this.subject);
         resolve();
       });
     });
