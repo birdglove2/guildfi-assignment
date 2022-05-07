@@ -2,6 +2,7 @@ import { createDbTables } from 'db';
 import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
 import { logger } from '@gfassignment/common';
+import { UserUpdatedListener } from 'events/listeners/user-updated-listener';
 
 const start = async () => {
   if (process.env.APP_ENV !== 'local') {
@@ -34,6 +35,9 @@ const start = async () => {
         logger.info('NATS connection closed!');
         process.exit();
       });
+
+      new UserUpdatedListener(natsWrapper.client).listen();
+
       process.on('SIGINT', () => natsWrapper.client.close());
       process.on('SIGTERM', () => natsWrapper.client.close());
     } catch (err) {
