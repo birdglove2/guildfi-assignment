@@ -8,11 +8,13 @@
   - [User Service](#user-service)
   - [Transaction Service](#transaction-service)
 - [How it works](#how-it-works)
-
+  - [Step 1: Be our users](#step-1-be-our-users)
+  - [Step 1: Doing transaction](#step-2-doing-transaction)
 - [How to run](#how-to-run)
   - [Prerequisites](#prerequisites)
   - [Usage](#usage)
-- [Next Step](#next-step)
+- [Todo list](#todo-list)
+- [For scalability](#for-scalability)
 
 # Design
 
@@ -20,21 +22,43 @@
 
 ![Architecture](Architecture.png)
 
+## Endpoints
+
+All endpoints are in this [link](https://documenter.getpostman.com/view/16305047/UyxdKpCm)
+
 ## Auth Service
 
-- NoSQL
+Auth service is designed to seperate user authentication credentials from the user detail that might increase in the future. NoSQL database will be used in this service since the data is very simple, and to be flexible for any change in the future.
+
 - Schema
+
+  | authId   | email    | password |
+  | -------- | -------- | -------- |
+  | ObjectId | string   | string   |
+  | required | required | required |
+
+- Endpoint
+
+  Signup
+  Login
 
 ## User Service
 
-- NoSQL
+User service is designed with NoSQL database to be flexible for any features in the future. For example, users might have connection or friends with other users, which will be store in graph data structure.
+
 - Schema
+
+  | authId   | email    | name     | walletAddress |
+  | -------- | -------- | -------- | ------------- |
+  | ObjectId | string   | string   | string        |
+  | required | required | required | allowNull     |
 
 ## Transaction Service
 
-- Endpoint
-- SQL
+The transaction data should be stored in SQL database due to the structure itself, especially with double-entry bookkeeping for full tracebility.
+
 - ER Diagram
+
   ![ERDiagramTransaction](ERDiagramTransaction.png)
 
 - Schema and example of tables storing data
@@ -76,7 +100,7 @@
 
 # How it works
 
-## 1. Be our users
+## Step 1: Be our users
 
 ### 1.1. Create account
 
@@ -95,9 +119,9 @@
 4. User service then publishes `UserUpdatedEvent`.
 5. Transaction service listens `UserUpdatedEvent` and create the user in it own database.
 
-## 2. Doing Transaction
+## Step 2: Doing Transaction
 
-Once user connect wallet to our platform, they are allowed to do transaction (in fact, the platform will not record the transaction in the database because I don't really know how to prevent them from doing transaciton somewhere else, since it's blockchain XD).
+Once user connect wallet to our platform, they are allowed to do transaction (in fact, the platform will not record the transaction in the database because I don't really know how to prevent them from doing transaciton outside the platform, since it's blockchain).
 
 ### 2.1 Transfer
 
@@ -107,9 +131,15 @@ Once user connect wallet to our platform, they are allowed to do transaction (in
   2. Let user approve and Backend use `transferFrom` with my hardcoded private key.
   3. Frontend let client sign `transfer` transaction and send back to Backend to proceed.
   4. Frontend let client call `transfer` themselves and send back `txHash` to Backend to proceed.
-- However,
+- However, approach `1` is impossible since the private key should not leave the client.
+  Approach `2` requires trust from client. Approach `3` This seems to be great approach since the signed transaction cannot be manipulated by anyone. Unfortunately, I can't figure out how to do it right now. Therefore, approach `4` is the only possible approach that I found and can use in this assignment.
+
+- So, after client transferred token, browser wallet will return transaction hash. Then, Frontend can send the hash to backend to proceed
 
 ### 2.2 Backend write to database with double-entry bookkeeping
+
+- Backend extract the transaction receipt from the hash. Check if those two users who did the transaction are in the platform or not. If not, it will not write the data in the database. If yes, proceed to the next step.
+- For `double-entry bookkeeping`, transaction detail will be stored in `Transaction` table, and the `Transaction_Record` will seperate the transaction detail into two sides which are the `From` side and the `To` side, and store with their own `debit/credit` and `accountType`.
 
 -
 
@@ -124,4 +154,70 @@ Once user connect wallet to our platform, they are allowed to do transaction (in
 
 ## Usage
 
-# Next Step
+### Run all services simultaneously
+
+```
+skaffold dev
+```
+
+#### To map port outside
+
+1. Get pods
+
+```
+kubectl get pods
+```
+
+2. Map port from the pod inside kubenetes cluster to your local machine
+
+```
+kubectl port-forward <pod> <outsidePort>:<insidePort>
+```
+
+#### To automatically map port to your local machine
+
+```
+skaffold dev --port-forward
+```
+
+- port 3001 - auth-service
+- port 3002 - user-service
+- port 3003 - transaction-service
+
+#
+
+### Run each service seperately
+
+\*cd to each directory seperately first
+
+1. Install dependencies
+
+   ```
+   npm install
+   ```
+
+2. Run locally
+   ```
+   npm run local
+   ```
+
+\*\*Note that `npm run local` will by pass database and nats environment vaiables and their connection, but you still can connect to the database with your own credentials and remove the bypass line.
+
+## Test
+
+\*cd to each directory seperately first
+
+    npm run test
+
+# Todo list
+
+Since the project is not entirely considered finished. Here's the todo list of what I intended to finish
+
+- Write and end-to-end test to test that all services can work together with frontend.
+- Implement Redis for transaction service.
+
+# For scalability
+
+- The app could be deploy in any cloud provider. I implemented `logger` which will write the logs in to `log` folder inside each service. So we could grab the file from the cloud provider and debug as it increases in complexity.
+- In the future, I expect that there will be more transaction type where users are not only transfer token but do something else as well. The transaction service is designed to be able to keep track of many `TransactionMethod` and `AccountType`.
+  In addition, for full accounting system, we could implement a balance sheet for tracebilty as well.
