@@ -1,4 +1,4 @@
-import { BadRequestError } from '@gfassignment/common';
+import { BadRequestError, logger } from '@gfassignment/common';
 import { TransactionCreatedPublisher } from 'events/publishers';
 import { TransactionRepository } from '../repository/transaction';
 import { natsWrapper } from '../../nats-wrapper';
@@ -9,7 +9,12 @@ import { TransactionRecordRepository } from 'api/repository/transactionRecord';
 import { getTxFromHash } from './helper';
 
 export class TransactionService {
-  public static async listTransaction(userAuthId: string, page: number, limit: number) {
+  public static async listTransaction(page: number, limit: number) {
+    const result = await TransactionRecordRepository.listTransaction(page, limit);
+    return result;
+  }
+
+  public static async getTransactionByUserAuthId(userAuthId: string, page: number, limit: number) {
     const result = await TransactionRecordRepository.findByUserAuthId(userAuthId, page, limit);
     return result;
   }
