@@ -6,7 +6,15 @@ import { logger } from '@gfassignment/common';
 
 const start = async () => {
   if (process.env.APP_ENV !== 'local') {
-    // TODO: check postgres
+    if (!process.env.POSTGRES_HOST) {
+      throw new Error('POSTGRES_HOST must be defined');
+    }
+    if (!process.env.POSTGRES_USER) {
+      throw new Error('POSTGRES_USER must be defined');
+    }
+    if (!process.env.POSTGRES_PASSWORD) {
+      throw new Error('POSTGRES_PASSWORD must be defined');
+    }
     if (!process.env.NATS_CLIENT_ID) {
       throw new Error('NATS_CLIENT_ID must be defined');
     }

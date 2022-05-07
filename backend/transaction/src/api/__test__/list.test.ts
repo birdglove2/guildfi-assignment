@@ -7,13 +7,14 @@ const dummyTransactionAttrs = global.dummyTransactionAttrs;
 const dummyUserAttrs1 = global.dummyUserAttrs1;
 const dummyUserAttrs2 = global.dummyUserAttrs2;
 
-//TODO: test with many transactions as well!!
+//TODO: test with a lot of transactions as well!!
 it('should return 200 and list all transactions found by userAuthId', async () => {
   await global.createUsersWithWallet();
   await global.createTransaction();
 
-  let res = await request(app).get(`/api/v1/transaction?userAuthId=${dummyUserAttrs1.authId}`);
-  // .expect(200);
+  let res = await request(app)
+    .get(`/api/v1/transaction?userAuthId=${dummyUserAttrs1.authId}`)
+    .expect(200);
 
   let { transactions, pagination } = res.body.result;
   expect(transactions[0].userAuthId).toEqual(dummyUserAttrs1.authId);
@@ -64,8 +65,6 @@ it('should return 200 and list all transactions found by userAuthId', async () =
     totalItems: 1,
     totalPage: 1,
   });
-
-  //TODO populate
 });
 
 it('should return empty array if userAuthId is not found', async () => {
