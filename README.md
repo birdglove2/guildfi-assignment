@@ -37,11 +37,6 @@ Auth service is designed to seperate user authentication credentials from the us
   | ObjectId | string   | string   |
   | required | required | required |
 
-- Endpoint
-
-  Signup
-  Login
-
 ## User Service
 
 User service is designed with NoSQL database to be flexible for any features in the future. For example, users might have connection or friends with other users, which will be store in graph data structure.
@@ -63,14 +58,16 @@ The transaction data should be stored in SQL database due to the structure itsel
 
 - Schema and example of tables storing data
 
-  There are 3 users: A, B, and C.
+  Suppose there are 3 users: A, B, and C.
 
   - User A connect with wallet WA01
   - User B connect with wallet WB02
   - User C connect with wallet WC03
 
-  Suppose User A transfers 200 GEM to User B, which then transaction TX1 occurs,
-  and User C transfer 100 GEM to User A, which then transaction TX2 occurs.
+  After that
+
+  - User A transfers 200 GEM to User B --> returning TX1 hash
+  - User C transfers 100 GEM to User A --> returning TX2 hash
 
   Tables will look like this
 
@@ -104,17 +101,17 @@ The transaction data should be stored in SQL database due to the structure itsel
 
 ### 1.1. Create account
 
-1. Client creates account using email, receiving back JWT token
+1. Client creates account by `POST /api/v1/auth/signup`, using email, receiving back JWT token
 2. Frontend attach the token to header.
 
 ### 1.2. Create User
 
-1. Client creates user connected to the `authId`, add name, and maybe other attributes in the future.
+1. Client creates user connected to the `authId`, add name, and maybe other attributes in the future. Using `POST /api/v1/user/` in user service.
 
 ### 1.3. Connect Wallet
 
-1. Frontend GET certain message from the backend, pop up it to metamask, and let user sign the message to get the signature.
-2. Frontend POST `/connectWallet` with `signature` and client's `walletAddress`
+1. Frontend `GET /api/v1/user/message` to get certain message from the backend, pop up it to metamask, and let user sign the message to get the `signature`.
+2. Frontend `POST /api/v1/user/connectWallet` with `signature` and client's `walletAddress`
 3. Backend will verify that the client is the real owner of `walletAddress`, and update the database of the client with `authId` attached in `JWT token`
 4. User service then publishes `UserUpdatedEvent`.
 5. Transaction service listens `UserUpdatedEvent` and create the user in it own database.
@@ -134,14 +131,12 @@ Once user connect wallet to our platform, they are allowed to do transaction (in
 - However, approach `1` is impossible since the private key should not leave the client.
   Approach `2` requires trust from client. Approach `3` This seems to be great approach since the signed transaction cannot be manipulated by anyone. Unfortunately, I can't figure out how to do it right now. Therefore, approach `4` is the only possible approach that I found and can use in this assignment.
 
-- So, after client transferred token, browser wallet will return transaction hash. Then, Frontend can send the hash to backend to proceed
+- So, after client transferred token, browser wallet will return transaction hash. Then, Frontend can send the hash to backend, using `POST /` in transaction service, to proceed.
 
 ### 2.2 Backend write to database with double-entry bookkeeping
 
 - Backend extract the transaction receipt from the hash. Check if those two users who did the transaction are in the platform or not. If not, it will not write the data in the database. If yes, proceed to the next step.
 - For `double-entry bookkeeping`, transaction detail will be stored in `Transaction` table, and the `Transaction_Record` will seperate the transaction detail into two sides which are the `From` side and the `To` side, and store with their own `debit/credit` and `accountType`.
-
--
 
 # How to run
 
