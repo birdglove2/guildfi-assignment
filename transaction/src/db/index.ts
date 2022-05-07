@@ -96,6 +96,6 @@ export const createDbTables = async () => {
       });
     }
   } catch (err) {
-    logger.error('Connect Postgres failed!', err);
+    logger.error('Postgres Error!', err);
   }
 };
