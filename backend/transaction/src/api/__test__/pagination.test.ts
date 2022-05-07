@@ -50,4 +50,14 @@ it('should return correct pagination', () => {
     totalPage: 1,
     totalItems: 10,
   });
+
+  pagination = Pagination.create(10, 10, 0);
+  expect(pagination).toEqual({
+    page: 0,
+    limit: 10,
+    prevPage: -1,
+    nextPage: 0,
+    totalPage: 0,
+    totalItems: 0,
+  });
 });

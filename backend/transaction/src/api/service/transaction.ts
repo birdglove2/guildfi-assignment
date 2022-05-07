@@ -87,7 +87,7 @@ export class TransactionService {
     const { transactionRecordFrom, transactionRecordTo } =
       await TransactionRecordService.createRecord(transactionAttrs, fromUser, toUser);
 
-    // new TransactionCreatedPublisher(natsWrapper.client).publish(transactionAttrs);
+    new TransactionCreatedPublisher(natsWrapper.client).publish(transactionAttrs);
     return {
       transactionRecordFrom,
       transactionRecordTo,

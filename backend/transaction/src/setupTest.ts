@@ -57,7 +57,7 @@ global.dummyTransactionAttrs = {
   to: '0X7FDBF34B6A59B9E0BAF98032F53B8A8EBC1BA65F',
   timestamp: 1651489312,
   method: TransactionMethod.Transfer,
-  amount: ethers.utils.parseEther('20000').toString(),
+  amount: ethers.utils.parseEther('5000').toString(),
   gas: ethers.utils.parseEther('0.000000009178405715').toString(),
   block: 10605632,
   blockHash: '0x2af0f836db538caece2cff011d4e4c484c4ac913a91d22133312c22cc8f00fcb',

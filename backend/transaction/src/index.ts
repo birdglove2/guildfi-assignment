@@ -7,7 +7,6 @@ import { logger } from '@gfassignment/common';
 const start = async () => {
   if (process.env.APP_ENV !== 'local') {
     // TODO: check postgres
-
     if (!process.env.NATS_CLIENT_ID) {
       throw new Error('NATS_CLIENT_ID must be defined');
     }

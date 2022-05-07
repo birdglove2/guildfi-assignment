@@ -1,17 +1,22 @@
-import { User, UserAttrs } from 'models/user';
-import { knex } from 'db';
+import { InternalServerError } from '@gfassignment/common';
+import { UserAttrs } from 'models/user';
+import { knex, TABLES } from 'db';
+
 export class UserRepository {
   public static async findByWalletAddress(walletAddress: string) {
     walletAddress = walletAddress.toUpperCase();
-    const u2 = await knex('user').where({ walletAddress });
-    const u3 = await knex('user').where({ walletAddress });
-    return u2;
+
+    const users = await knex(TABLES.User).where({ walletAddress });
+    if (users.length == 0) {
+      return null;
+    } else if (users.length > 1) {
+      throw new InternalServerError('User has more than 1 account!');
+    }
+    return users[0];
   }
 
   public static async createUser(userAttrs: UserAttrs) {
-    // console.log('object', userAttrs);
     userAttrs.walletAddress = userAttrs.walletAddress.toUpperCase();
-    // console.log('xx213', userAttrs);
-    return knex('user').insert(userAttrs);
+    return knex(TABLES.User).insert(userAttrs);
   }
 }

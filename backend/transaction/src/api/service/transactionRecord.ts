@@ -1,6 +1,5 @@
 import { TransactionAttrs, TransactionMethod } from 'models/transaction';
 import { AccountType } from 'models/transactionRecord';
-import { UserService } from './user';
 import { TransactionRecordRepository } from 'api/repository/transactionRecord';
 import { UserAttrs } from 'models/user';
 
@@ -21,6 +20,13 @@ const getAccountTypes = (method: TransactionMethod) => {
 };
 
 export class TransactionRecordService {
+  /**
+   * Create double-entry transaction records
+   * @param transactionAttrs pass from transaction service
+   * @param fromUser used to get userAuthId
+   * @param toUser used to get userAuthId
+   * @returns two transactionRecord both `From` and `To` side
+   */
   public static async createRecord(
     transactionAttrs: TransactionAttrs,
     fromUser: UserAttrs,
