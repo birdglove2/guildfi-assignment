@@ -49,7 +49,7 @@ export class TransactionRepository {
     return { transactionFrom, transactionTo: 'x' };
   }
 
-  public static async createTransaction(transaction: TransactionAttrs) {
-    return Transaction.insert(transaction);
+  public static async createTransaction(transactionAttrs: TransactionAttrs) {
+    return Transaction.insert(transactionAttrs);
   }
 }

@@ -10,6 +10,7 @@ import { GEMContract } from 'contract';
 import { TransactionRecordService } from './transactionRecord';
 import { UserService } from './user';
 import { TransactionRecordRepository } from 'api/repository/transactionRecord';
+import moment from 'moment';
 
 const isTransactionMined = async (transactionHash: string) => {
   const contract = GEMContract.getContractInstance();
@@ -70,7 +71,7 @@ export class TransactionService {
       hash: tx.hash,
       from: fromUser.walletAddress,
       to: toUser.walletAddress,
-      timestamp: new Date(timestamp),
+      timestamp,
       method: TransactionMethod.Transfer,
       amount: amount.toString(),
       gas: tx.gasPrice.toString(),

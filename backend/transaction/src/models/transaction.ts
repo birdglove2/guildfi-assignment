@@ -16,7 +16,7 @@ export interface TransactionAttrs {
   block: number;
   blockHash: string;
   nonce: number;
-  timestamp: Date;
+  timestamp: number; // easier to store, and will be convert to readable string with moment.unix
 }
 
 export const Transaction = knex(TABLES.Transaction);

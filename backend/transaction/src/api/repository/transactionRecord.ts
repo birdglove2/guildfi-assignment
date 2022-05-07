@@ -10,6 +10,7 @@ export class TransactionRecordRepository {
     const pagination = Pagination.create(page, limit, totalItems);
 
     const transactions = await knex(TABLES.TransactionRecord)
+      .join(TABLES.Transaction, 'txHash', 'hash')
       .where({ userAuthId })
       .offset((page - 1) * limit)
       .limit(limit);
