@@ -5,7 +5,9 @@ import { createTransactionValidator } from './validator';
 
 const router = express.Router();
 
-router.get('/', TransactionController.listTransaction);
+router.get('/listUser', TransactionController.listUser);
+
+router.get('/user', TransactionController.getTransactionByUserAuthId);
 
 router.post(
   '/',
@@ -13,5 +15,7 @@ router.post(
   validateRequest,
   TransactionController.createTransaction
 );
+
+router.get('/', TransactionController.listTransaction);
 
 export { router as TransactionRouter };

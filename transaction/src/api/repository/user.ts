@@ -1,12 +1,18 @@
 import { InternalServerError } from '@gfassignment/common';
 import { UserAttrs } from 'models/user';
 import { knex, TABLES } from 'db';
+import { logger } from 'ethers';
 
 export class UserRepository {
+  public static async findAll() {
+    return knex(TABLES.User);
+  }
+
   public static async findByWalletAddress(walletAddress: string) {
     walletAddress = walletAddress.toUpperCase();
 
     const users = await knex(TABLES.User).where({ walletAddress });
+
     if (users.length == 0) {
       return null;
     } else if (users.length > 1) {
