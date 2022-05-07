@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { successResponse, BadRequestError, NotAuthorizedError } from '@gfassignment/common';
+import { successResponse, BadRequestError } from '@gfassignment/common';
 import { AuthService } from './service/auth';
 
 export class AuthController {
