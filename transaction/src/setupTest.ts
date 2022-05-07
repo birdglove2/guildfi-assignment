@@ -1,5 +1,3 @@
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import mongoose from 'mongoose';
 import { TransactionAttrs, TransactionMethod } from './models/transaction';
 import { TransactionRecordAttrs } from './models/transactionRecord';
 import { UserAttrs } from './models/user';
@@ -7,6 +5,7 @@ import { ethers } from 'ethers';
 import { createDbTables } from './db';
 import { UserRepository } from 'api/repository/user';
 import { TransactionService } from 'api/service/transaction';
+import { knex } from './db';
 jest.mock('./nats-wrapper');
 
 declare global {
@@ -23,32 +22,17 @@ declare global {
   }>;
 }
 
-let mongo: any;
 beforeAll(async () => {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
-  mongo = await MongoMemoryServer.create();
-  const mongoUri = mongo.getUri();
-
-  await mongoose.connect(mongoUri);
 });
 
 beforeEach(async () => {
   jest.clearAllMocks();
-  const collections = await mongoose.connection.db.collections();
-
   await createDbTables();
-
-  for (let collection of collections) {
-    await collection.deleteMany({});
-  }
 });
 
 afterAll(async () => {
-  await mongo.stop();
-  setTimeout(function () {
-    mongoose.disconnect();
-  }, 1000);
+  await knex.destroy();
 });
 
 global.dummyTransactionAttrs = {

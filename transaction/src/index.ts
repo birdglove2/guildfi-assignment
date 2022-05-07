@@ -1,5 +1,4 @@
 import { createDbTables } from 'db';
-import mongoose from 'mongoose';
 import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
 import { logger } from '@gfassignment/common';
@@ -47,7 +46,7 @@ const start = async () => {
   const port = process.env.PORT ? process.env.PORT : 8888;
 
   app.listen(port, () => {
-    logger.info(process.env.APP_ENV);
+    logger.info('APP_ENVIRONMENT===', process.env.APP_ENV);
     logger.info(`Listening on port ${port}!!!!!!!!`);
   });
 };
