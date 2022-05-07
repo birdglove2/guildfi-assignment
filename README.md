@@ -18,7 +18,7 @@
 
 ## Architecture
 
-![Architecture](image/Architecture.png)
+![Architecture](Architecture.png)
 
 ## Auth Service
 
@@ -35,7 +35,7 @@
 - Endpoint
 - SQL
 - ER Diagram
-  ![ERDiagramTransaction](image/ERDiagramTransaction.png)
+  ![ERDiagramTransaction](ERDiagramTransaction.png)
 
 - Schema and example of tables storing data
 
