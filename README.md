@@ -210,6 +210,7 @@ Since the project is not entirely considered finished. Here's the todo list of w
 
 - Write and end-to-end test to test that all services can work together with frontend.
 - Implement Redis for transaction service.
+- Fix CI test of transaction. It is broken because it cannot connect to postgres, I remove it for now.
 
 # For scalability
 
