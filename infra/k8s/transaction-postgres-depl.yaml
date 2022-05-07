@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-postgres-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transaction-postgres
+  template:
+    metadata:
+      labels:
+        app: transaction-postgres
+    spec:
+      containers:
+        - name: transaction-postgres
+          image: postgres
+          env:
+            - name: POSTGRES_PASSWORD
+              value: 'thisistestpostgrespassword'
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transaction-postgres-srv
+spec:
+  selector:
+    app: transaction-postgres
+  ports:
+    - name: db
+      protocol: TCP
+      port: 5432
+      targetPort: 5432
