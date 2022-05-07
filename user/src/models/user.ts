@@ -50,7 +50,6 @@ const userSchema = new mongoose.Schema(
     walletAddress: {
       type: String,
       required: false,
-      unique: true,
     },
     name: {
       type: String,
