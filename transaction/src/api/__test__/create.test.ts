@@ -6,7 +6,8 @@ import { natsWrapper } from '../../nats-wrapper';
 const dummyTransactionAttrs = global.dummyTransactionAttrs;
 
 it('should return 201 if transaction and transaction records are created and emit event successfully', async () => {
-  await global.createUsersWithWallet();
+  await global.createUser1WithWallet();
+  await global.createUser2WithWallet();
   const hash = dummyTransactionAttrs.hash;
 
   const res = await request(app).post(`/api/v1/transaction`).send({ hash });
@@ -33,10 +34,18 @@ it('should return 201 if transaction and transaction records are created and emi
   const eventData = JSON.parse((natsWrapper.client.publish as jest.Mock).mock.calls[0][1]);
   expect(eventData).toEqual(dummyTransactionAttrs);
 });
-
-it('should return 400 if user are not in the platform yet', async () => {
-  const hash = '0x9eb141b97e9862eaf107a9a5bc4629b88fd5e3e113ff2dc9868f9a5ab3cf5ba6';
+it('should return 400 if sender is not in the platform yet', async () => {
+  await global.createUser2WithWallet();
+  const hash = dummyTransactionAttrs.hash;
   const res = await request(app).post(`/api/v1/transaction`).send({ hash }).expect(400);
   const result = res.body.result;
-  expect(result[0].message).toEqual('Users are not registered in the platform yet!');
+  expect(result[0].message).toEqual('Sender is not registered in the platform yet!');
+});
+
+it('should return 400 if reciepient is not in the platform yet', async () => {
+  await global.createUser1WithWallet();
+  const hash = dummyTransactionAttrs.hash;
+  const res = await request(app).post(`/api/v1/transaction`).send({ hash }).expect(400);
+  const result = res.body.result;
+  expect(result[0].message).toEqual('Reciepient is not registered in the platform yet!');
 });

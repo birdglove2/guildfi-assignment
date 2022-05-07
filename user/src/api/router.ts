@@ -1,10 +1,11 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express from 'express';
 import { validateRequest, currentCredentials, requireAuth } from '@gfassignment/common';
-import { UserService } from './service/user';
 import { createUserValidator, connectWalletValidator } from './validator';
 import { UserController } from './controller';
 
 const router = express.Router();
+
+router.get('/message', UserController.getMessageForSigning);
 
 router.post(
   '/',
@@ -29,8 +30,8 @@ router.get('/:authId', UserController.getUserByAuthId);
 
 router.get('/walletAddress/:walletAddress', UserController.getUserByWalletAddress);
 
-router.post('/transfer', async (req: Request, res: Response, next: NextFunction) => {
-  return UserService.transferGEM(req, res, next);
-});
+// router.post('/transfer', async (req: Request, res: Response, next: NextFunction) => {
+//   return UserService.transferGEM(req, res, next);
+// });
 
 export { router as UserRouter };

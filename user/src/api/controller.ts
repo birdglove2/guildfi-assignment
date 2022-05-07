@@ -1,9 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import { BadRequestError, successResponse } from '@gfassignment/common';
 import { UserService } from './service/user';
-import { WalletAddress } from './service/walletAddress';
+import { MESSAGE, WalletAddress } from './service/walletAddress';
 
 export class UserController {
+  public static async getMessageForSigning(req: Request, res: Response, next: NextFunction) {
+    return successResponse(res, 200, { message: MESSAGE });
+  }
+
   public static async createUser(req: Request, res: Response, next: NextFunction) {
     try {
       const { name } = req.body;
@@ -33,7 +37,7 @@ export class UserController {
         walletAddress,
       });
 
-      successResponse(res, 204, user);
+      successResponse(res, 200, user);
     } catch (err) {
       next(err);
     }

@@ -13,7 +13,8 @@ declare global {
   var dummyTransactionAttrs2: TransactionAttrs;
   var dummyUserAttrs1: UserAttrs;
   var dummyUserAttrs2: UserAttrs;
-  function createUsersWithWallet(): Promise<void>;
+  function createUser1WithWallet(): Promise<void>;
+  function createUser2WithWallet(): Promise<void>;
   function createTransaction(): Promise<{
     transaction: TransactionAttrs;
     transactionRecordFrom: TransactionRecordAttrs;
@@ -71,12 +72,14 @@ global.dummyUserAttrs2 = {
   authId: '6274f11189400bcd48b28eaf',
 };
 
-global.createUsersWithWallet = async () => {
+global.createUser1WithWallet = async () => {
   await UserRepository.createUser({
     walletAddress: global.dummyUserAttrs1.walletAddress,
     authId: global.dummyUserAttrs1.authId,
   });
+};
 
+global.createUser2WithWallet = async () => {
   await UserRepository.createUser({
     walletAddress: global.dummyUserAttrs2.walletAddress,
     authId: global.dummyUserAttrs2.authId,

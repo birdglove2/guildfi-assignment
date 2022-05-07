@@ -20,10 +20,14 @@ export class TransactionService {
     const fromUser = await UserService.findByWalletAddress(tx.from);
     const toUser = await UserService.findByWalletAddress(to);
 
-    if (!fromUser || !toUser) {
-      throw new BadRequestError('Users are not registered in the platform yet!');
-    } else if (!fromUser.walletAddress || !toUser.walletAddress) {
-      throw new BadRequestError('Users are not connect their wallet to the platform yet!');
+    if (!fromUser) {
+      throw new BadRequestError(`Sender is not registered in the platform yet!`);
+    } else if (!toUser) {
+      throw new BadRequestError(`Reciepient is not registered in the platform yet!`);
+    } else if (!fromUser.walletAddress) {
+      throw new BadRequestError('Sender does not connect wallet to the platform yet!');
+    } else if (!toUser.walletAddress) {
+      throw new BadRequestError('Reciepient does not connect wallet to the platform yet!');
     }
 
     const transactionAttrs = {

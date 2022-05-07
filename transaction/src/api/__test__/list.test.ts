@@ -9,7 +9,8 @@ const dummyUserAttrs2 = global.dummyUserAttrs2;
 
 //TODO: test with a lot of transactions as well!!
 it('should return 200 and list all transactions found by userAuthId', async () => {
-  await global.createUsersWithWallet();
+  await global.createUser1WithWallet();
+  await global.createUser2WithWallet();
   await global.createTransaction();
 
   let res = await request(app)

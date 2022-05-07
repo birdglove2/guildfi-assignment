@@ -9,7 +9,7 @@ it('should connect wallet and emit an event successfully', async () => {
     .post('/api/v1/user/connectWallet')
     .set('Authorization', `Bearer ${token}`)
     .send({ signature: process.env.SIGNATURE0, walletAddress: process.env.WALLET0 })
-    .expect(204);
+    .expect(200);
 
   const res = await request(app).get(`/api/v1/user/walletAddress/${process.env.WALLET0}`);
   const result = res.body.result;
