@@ -1,10 +1,10 @@
-name: tests
+name: tests-transaction
 
 on: pull_request
 
 jobs:
   build:
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v2
-    - run: cd transaction && npm install && npm run test:ci
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd transaction && npm install && npm run test:ci
