@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: transaction-depl
+  name: auth-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: transaction
+      app: auth
   template:
     metadata:
       labels:
-        app: transaction
+        app: auth
     spec:
       containers:
-        - name: transaction
-          image: guildfi-assignment/transaction
+        - name: auth
+          image: guildfi-assignment/auth
           env:
             - name: NODE_PATH
               value: 'src'
@@ -27,17 +27,22 @@ spec:
             - name: NATS_CLUSTER_ID
               value: guildfi-assignment
             - name: MONGO_URI
-              value: 'mongodb://transaction-mongo-srv:27017/transaction'
+              value: 'mongodb://auth-mongo-srv:27017/auth'
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: JWT_KEY
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: transaction-srv
+  name: auth-srv
 spec:
   selector:
-    app: transaction
+    app: auth
   ports:
-    - name: transaction
+    - name: auth
       protocol: TCP
       port: 3000
       targetPort: 3000

@@ -10,9 +10,7 @@ import { getTxFromHash } from './helper';
 
 export class TransactionService {
   public static async listTransaction(userAuthId: string, page: number, limit: number) {
-    // if(userAuthId) {
     const result = await TransactionRecordRepository.findByUserAuthId(userAuthId, page, limit);
-
     return result;
   }
 
