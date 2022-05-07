@@ -128,10 +128,10 @@ Once user connect wallet to our platform, they are allowed to do transaction (in
   2. Let user approve and Backend use `transferFrom` with my hardcoded private key.
   3. Frontend let client sign `transfer` transaction and send back to Backend to proceed.
   4. Frontend let client call `transfer` themselves and send back `txHash` to Backend to proceed.
-- However, approach `1` is impossible since the private key should not leave the client.
-  Approach `2` requires trust from client. Approach `3` This seems to be great approach since the signed transaction cannot be manipulated by anyone. Unfortunately, I can't figure out how to do it right now. Therefore, approach `4` is the only possible approach that I found and can use in this assignment.
+- However, approach `i` is impossible since the private key should not leave the client.
+  Approach `ii` requires trust from client. Approach `iii` This seems to be great approach since the signed transaction cannot be manipulated by anyone. Unfortunately, I can't figure out how to do it right now. Therefore, approach `iv` is the only possible approach that I found and can use in this assignment.
 
-- So, after client transferred token, browser wallet will return transaction hash. Then, Frontend can send the hash to backend, using `POST /` in transaction service, to proceed.
+- So, after client transferred token, browser wallet will return transaction hash. Then, Frontend can send the hash to backend, using `POST /api/v1/transaction` to proceed.
 
 ### 2.2 Backend write to database with double-entry bookkeeping
 
@@ -206,7 +206,7 @@ skaffold dev --port-forward
 
 # Todo list
 
-Since the project is not entirely considered finished. Here's the todo list of what I intended to finish
+Since the project is not entirely considered finished. Here's the todo list of what I intended to do
 
 - Write and end-to-end test to test that all services can work together with frontend.
 - Implement Redis for transaction service.
@@ -216,3 +216,4 @@ Since the project is not entirely considered finished. Here's the todo list of w
 - The app could be deploy in any cloud provider. I implemented `logger` which will write the logs in to `log` folder inside each service. So we could grab the file from the cloud provider and debug as it increases in complexity.
 - In the future, I expect that there will be more transaction type where users are not only transfer token but do something else as well. The transaction service is designed to be able to keep track of many `TransactionMethod` and `AccountType`.
   In addition, for full accounting system, we could implement a balance sheet for tracebilty as well.
+- As the number of user increases, we can implement caching for other services, proxy and load balancing.
