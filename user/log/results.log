@@ -4,3 +4,29 @@
 {"level":"http","message":"POST /api/v1/user 401 57 - 1.817 ms\n","timestamp":"2022-05-07 00:23:02"}
 {"level":"warn","message":[{"message":"Not authorized"}],"timestamp":"2022-05-07 00:23:05"}
 {"level":"http","message":"POST /api/v1/user 401 57 - 1.588 ms\n","timestamp":"2022-05-07 00:23:05"}
+{"level":"info","message":"Event published to subject user:created","timestamp":"2022-05-07 12:32:33"}
+{"level":"info","message":"Event published to subject user:updated","timestamp":"2022-05-07 12:32:33"}
+{"level":"info","message":"Event published to subject user:created","timestamp":"2022-05-07 12:32:35"}
+{"level":"warn","message":[{"message":"User Not Found"}],"timestamp":"2022-05-07 12:32:35"}
+{"level":"warn","message":[{"message":"User Not Found"}],"timestamp":"2022-05-07 12:32:35"}
+{"level":"warn","message":[{"message":"User Not Found"}],"timestamp":"2022-05-07 12:32:35"}
+{"level":"warn","message":[{"message":"User Not Found"}],"timestamp":"2022-05-07 12:32:35"}
+{"level":"info","message":"Event published to subject user:created","timestamp":"2022-05-07 12:32:36"}
+{"level":"info","message":"Event published to subject user:created","timestamp":"2022-05-07 12:32:36"}
+{"level":"warn","message":[{"message":"User already exists!"}],"timestamp":"2022-05-07 12:32:36"}
+{"level":"warn","message":[{"message":"Not authorized"}],"timestamp":"2022-05-07 12:32:37"}
+{"level":"warn","message":[{"message":"Not authorized"}],"timestamp":"2022-05-07 12:32:37"}
+{"level":"info","message":"Event published to subject user:created","timestamp":"2022-05-07 12:32:37"}
+{"level":"info","message":"Event published to subject user:updated","timestamp":"2022-05-07 12:32:38"}
+{"level":"info","message":"Event published to subject user:created","timestamp":"2022-05-07 12:33:31"}
+{"level":"info","message":"Event published to subject user:updated","timestamp":"2022-05-07 12:33:32"}
+{"level":"info","message":"Event published to subject user:created","timestamp":"2022-05-07 12:33:33"}
+{"level":"warn","message":[{"message":"User Not Found"}],"timestamp":"2022-05-07 12:33:33"}
+{"level":"warn","message":[{"message":"User Not Found"}],"timestamp":"2022-05-07 12:33:33"}
+{"level":"warn","message":[{"message":"User Not Found"}],"timestamp":"2022-05-07 12:33:33"}
+{"level":"warn","message":[{"message":"User Not Found"}],"timestamp":"2022-05-07 12:33:33"}
+{"level":"info","message":"Event published to subject user:created","timestamp":"2022-05-07 12:33:33"}
+{"level":"info","message":"Event published to subject user:created","timestamp":"2022-05-07 12:33:33"}
+{"level":"warn","message":[{"message":"User already exists!"}],"timestamp":"2022-05-07 12:33:34"}
+{"level":"info","message":"Event published to subject user:created","timestamp":"2022-05-07 12:33:35"}
+{"level":"info","message":"Event published to subject user:updated","timestamp":"2022-05-07 12:33:35"}

@@ -4,11 +4,11 @@ import {
   successResponse,
   BadRequestError,
   NotFoundError,
+  GEMContract,
 } from '@gfassignment/common';
 import { UserRepository } from '../repository/user';
 import { UserCreatedPublisher, UserUpdatedPublisher } from 'events/publishers';
 import { natsWrapper } from '../../nats-wrapper';
-import { GEMContract } from 'contract';
 import { ethers } from 'ethers';
 import { UserAttrs, UpdateUserAttrs } from 'models/user';
 

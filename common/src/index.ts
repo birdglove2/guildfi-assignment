@@ -21,3 +21,5 @@ export * from './events/transaction-created-event';
 
 export * from './utils/response';
 export * from './utils/logger';
+
+export * from './contract';

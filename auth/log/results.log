@@ -10,3 +10,15 @@
 {"level":"warn","message":[{"field":"password","message":"Password must be provided"}],"timestamp":"2022-05-07 00:22:22"}
 {"level":"warn","message":[{"field":"email","message":"Email must be provided"}],"timestamp":"2022-05-07 00:22:22"}
 {"level":"warn","message":[{"field":"email","message":"Email must be provided"},{"field":"password","message":"Password must be provided"}],"timestamp":"2022-05-07 00:22:22"}
+{"level":"warn","message":[{"message":"Email is already in used!"}],"timestamp":"2022-05-07 12:30:49"}
+{"level":"warn","message":[{"field":"email","message":"Email must be valid"},{"field":"confirmPassword","message":"Confirm Password must be provided"}],"timestamp":"2022-05-07 12:30:49"}
+{"level":"warn","message":[{"field":"confirmPassword","message":"Confirm Password must be provided"}],"timestamp":"2022-05-07 12:30:49"}
+{"level":"warn","message":[{"message":"Password and confirm password are not matched"}],"timestamp":"2022-05-07 12:30:49"}
+{"level":"warn","message":[{"field":"password","message":"Password must be between 8 and 20 characters"}],"timestamp":"2022-05-07 12:30:49"}
+{"level":"warn","message":[{"field":"password","message":"Password must be between 8 and 20 characters"}],"timestamp":"2022-05-07 12:30:49"}
+{"level":"warn","message":[{"message":"Invalid email or password"}],"timestamp":"2022-05-07 12:30:50"}
+{"level":"warn","message":[{"message":"Invalid email or password"}],"timestamp":"2022-05-07 12:30:50"}
+{"level":"warn","message":[{"message":"Invalid email or password"}],"timestamp":"2022-05-07 12:30:50"}
+{"level":"warn","message":[{"field":"password","message":"Password must be provided"}],"timestamp":"2022-05-07 12:30:50"}
+{"level":"warn","message":[{"field":"email","message":"Email must be provided"}],"timestamp":"2022-05-07 12:30:50"}
+{"level":"warn","message":[{"field":"email","message":"Email must be provided"},{"field":"password","message":"Password must be provided"}],"timestamp":"2022-05-07 12:30:50"}

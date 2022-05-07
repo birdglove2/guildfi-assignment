@@ -2,7 +2,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import { UserAttrs } from 'models/user';
 import jwt from 'jsonwebtoken';
-import { GEMContract } from 'contract';
+import { GEMContract } from '@gfassignment/common';
 import { Wallet } from 'ethers';
 import request from 'supertest';
 import { app } from './app';

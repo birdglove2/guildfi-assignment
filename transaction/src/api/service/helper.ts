@@ -1,5 +1,4 @@
-import { GEMContract } from 'contract';
-import { BadRequestError } from '@gfassignment/common';
+import { BadRequestError, GEMContract } from '@gfassignment/common';
 import { TransactionMethod } from 'models/transaction';
 import { ethers } from 'ethers';
 
