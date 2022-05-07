@@ -22,7 +22,7 @@ export abstract class Publisher<T extends Event> {
           return reject(err);
         }
 
-        logger.info('Event published to subject', this.subject);
+        logger.info(`Event published to subject ${this.subject}`);
         resolve();
       });
     });
