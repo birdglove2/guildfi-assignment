@@ -1,0 +1,22 @@
+from brownie import (
+    accounts,
+    network,
+    config,
+)
+
+LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "gananche-local"]
+FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
+
+
+def get_account(index=None, id=None):
+    if index:
+        return accounts[index]
+    # accounts from $`brownie accounts list`
+    if id:
+        return accounts.load(id)
+    if (
+        network.show_active() in LOCAL_BLOCKCHAIN_ENVIRONMENTS
+        or network.show_active() in FORKED_LOCAL_ENVIRONMENTS
+    ):
+        return accounts[0]
+    return accounts.add(config["wallets"]["from_key"])
